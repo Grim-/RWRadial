@@ -1,10 +1,12 @@
 ﻿using Verse;
 
-namespace RWRadial
+namespace RWGizmoMenu
 {
     public class AbilityRadialPagerSettings : ModSettings
     {
         public bool IsEnabled = true;
+
+        public ContextMenuLayoutDef layoutDef;
 
         public bool ShowFavouritesMenu = true;
         public bool ShowFavouritesOnMainBar = true;
@@ -44,6 +46,7 @@ namespace RWRadial
             Scribe_Values.Look(ref navButtonsSize, "navButtonsSize", 20f);
             Scribe_Values.Look(ref minPageCount, "minPageCount", 3);
             Scribe_Values.Look(ref maxPageCount, "maxPageCount", 12);
+            Scribe_Defs.Look(ref layoutDef, "layoutDef");
         }
 
         public void ResetToDefaults()

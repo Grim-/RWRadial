@@ -63,6 +63,9 @@
       <HintPath>H:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>H:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>D:\Games\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
@@ -71,11 +74,15 @@
   <ItemGroup>
     <Compile Include="AbilityRadialPager.cs" />
     <Compile Include="AbilityRadialPagerSettings.cs" />
+    <Compile Include="ContextMenuDefOf.cs" />
+    <Compile Include="GridMenuLayout.cs" />
+    <Compile Include="MenuLayout.cs" />
+    <Compile Include="RadialMenuLayout.cs" />
     <Compile Include="RWRadialMod.cs" />
     <Compile Include="GameComp_RadialFavouritesTracker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RadialMenuItem.cs" />
-    <Compile Include="RadialMenuWindow.cs" />
+    <Compile Include="ContextMenuItem.cs" />
+    <Compile Include="UIContextMenuWindow.cs" />
     <Compile Include="TMFAbilityHelper.cs" />
   </ItemGroup>
   <ItemGroup>

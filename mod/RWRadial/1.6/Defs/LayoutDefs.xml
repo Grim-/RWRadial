@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RWGizmoMenu.ContextMenuLayoutDef>
+    <defName>Grid</defName>
+    <label>Grid</label>
+    <layoutWorker>RWGizmoMenu.GridMenuLayout</layoutWorker>
+  </RWGizmoMenu.ContextMenuLayoutDef>
+
+  <RWGizmoMenu.ContextMenuLayoutDef>
+    <defName>Radial</defName>
+        <label>Radial</label>
+    <layoutWorker>RWGizmoMenu.RadialMenuLayout</layoutWorker>
+  </RWGizmoMenu.ContextMenuLayoutDef>
+</Defs>

@@ -1,9 +1,10 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
-namespace RWRadial
+namespace RWGizmoMenu
 {
     public class RWRadialMod : Mod
     {
@@ -31,10 +32,11 @@ namespace RWRadial
             Text.Font = GameFont.Small;
             listingStandard.Gap();
 
-            listingStandard.CheckboxLabeled("Enable Radial Menu", ref settings.IsEnabled);
+            listingStandard.CheckboxLabeled("Enable Menu", ref settings.IsEnabled);
             listingStandard.Gap(4f);
 
-
+            listingStandard.CheckboxLabeled("Enable Menu", ref settings.IsEnabled);
+            listingStandard.Gap(4f);
 
             listingStandard.CheckboxLabeled("Show Favourites In Submenu", ref settings.ShowFavouritesMenu);
             listingStandard.Gap(4f);
@@ -43,9 +45,18 @@ namespace RWRadial
             listingStandard.CheckboxLabeled("Show Favourites On Main", ref settings.ShowFavouritesOnMainBar);
             listingStandard.Gap(4f);
 
-            listingStandard.Label("Menu Layout Settings");
+            listingStandard.Label("Layout Selection");
             listingStandard.Gap(6f);
 
+            if (listingStandard.ButtonText(settings.layoutDef?.LabelCap ?? "Select Layout"))
+            {
+                var options = new List<FloatMenuOption>();
+                foreach (var layoutDef in DefDatabase<ContextMenuLayoutDef>.AllDefs)
+                {
+                    options.Add(new FloatMenuOption(layoutDef.LabelCap, () => settings.layoutDef = layoutDef));
+                }
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
 
 
             listingStandard.Label($"Radius: {settings.baseRadius}");
@@ -113,13 +124,6 @@ namespace RWRadial
             }
 
             listingStandard.Gap();
-            listingStandard.Label("Controls:");
-            listingStandard.Label("• Left-click: Activate ability");
-            listingStandard.Label("• Right-click: Toggle favorite (on abilities)");
-            listingStandard.Label("• Right-click: Go back (on empty space)");
-            listingStandard.Label("• Escape: Close menu");
-
-            listingStandard.Gap();
             listingStandard.Label("Note: Changes will take effect immediately for new radial menus.");
 
             listingStandard.End();
@@ -128,7 +132,7 @@ namespace RWRadial
 
         public override string SettingsCategory()
         {
-            return "Magic and Myths";
+            return "Rimworld Gizmo Menu";
         }
     }
 }

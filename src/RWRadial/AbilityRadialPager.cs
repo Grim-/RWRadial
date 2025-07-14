@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 
-namespace RWRadial
+namespace RWGizmoMenu
 {
     [StaticConstructorOnStartup]
     public static class AbilityRadialPager
@@ -99,7 +99,7 @@ namespace RWRadial
                 defaultLabel = "Abilities",
                 defaultDesc = "Open radial ability menu",
                 icon = RadialIcon,
-                hotKey = KeyBindingDefOf.Misc1,
+                hotKey = ContextMenuDefOf.RWR_OpenMenu,
                 action = () => OpenRadialMenu(pawn, abilityGizmos),
                 Order = -100
             };
@@ -109,7 +109,7 @@ namespace RWRadial
         {
             if (abilityGizmos.Any())
             {
-                RadialMenuWindow.ShowFromGizmos(pawn, abilityGizmos, false);
+                UIContextMenuWindow.ShowFromGizmos(pawn, abilityGizmos, false);
             }
         }
 

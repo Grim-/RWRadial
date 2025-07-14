@@ -1,27 +1,70 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using Verse;
 
-namespace RWRadial
+namespace RWGizmoMenu
 {
     public class GameComp_RadialFavouritesTracker : GameComponent
     {
         public Dictionary<Pawn, List<string>> PawnAbilityFavourites = new Dictionary<Pawn, List<string>>();
-
         private List<Pawn> workingKeysList;
         private List<List<string>> workingValuesList;
 
         public GameComp_RadialFavouritesTracker(Game game)
         {
+
         }
+
+        public override void GameComponentOnGUI()
+        {
+            base.GameComponentOnGUI();
+
+            if (ContextMenuDefOf.RWR_OpenArchitectMenu.JustPressed && Find.CurrentMap != null && !Find.WindowStack.AnyWindowAbsorbingAllInput)
+            {
+                OpenArchitectRadialMenu();
+            }
+        }
+
+        private void OpenArchitectRadialMenu()
+        {
+            List<ContextMenuItem> categoryItems = new List<ContextMenuItem>();
+
+            foreach (var catDef in DefDatabase<DesignationCategoryDef>.AllDefs.OrderBy(c => c.order))
+            {
+                if (catDef.ResolvedAllowedDesignators.Any(d => d.Visible))
+                {
+                    var icon = catDef.ResolvedAllowedDesignators.First(d => d.Visible).icon;
+                    var localCatDef = catDef;
+
+                    var catItem = new ContextMenuItem(null, catDef.LabelCap, catDef.description, icon as Texture2D)
+                    {
+                        getSubItems = () => GetDesignatorItemsFor(localCatDef)
+                    };
+                    categoryItems.Add(catItem);
+                }
+            }
+            UIContextMenuWindow.Show(categoryItems);
+        }
+
+        private List<ContextMenuItem> GetDesignatorItemsFor(DesignationCategoryDef categoryDef)
+        {
+            List<ContextMenuItem> designatorItems = new List<ContextMenuItem>();
+            foreach (var designator in categoryDef.ResolvedAllowedDesignators.OrderBy(d => d.Order))
+            {
+                if (designator.Visible)
+                {
+                    designatorItems.Add(new ContextMenuItem(designator));
+                }
+            }
+            return designatorItems;
+        }
+
 
         public void AddFavourite(Pawn pawn, string defName)
         {
-            if (!PawnAbilityFavourites.ContainsKey(pawn))
-            {
-                PawnAbilityFavourites[pawn] = new List<string>();
-            }
-
-            if (PawnAbilityFavourites[pawn] == null)
+            if (!PawnAbilityFavourites.ContainsKey(pawn) || PawnAbilityFavourites[pawn] == null)
             {
                 PawnAbilityFavourites[pawn] = new List<string>();
             }
@@ -32,27 +75,20 @@ namespace RWRadial
             }
         }
 
-
         public bool HasAnyFavourites(Pawn pawn)
         {
-            if (!PawnAbilityFavourites.ContainsKey(pawn))
+            if (PawnAbilityFavourites.TryGetValue(pawn, out List<string> favourites) && favourites != null)
             {
-                return false;
+                return favourites.Count > 0;
             }
-
-            if (PawnAbilityFavourites[pawn] != null && PawnAbilityFavourites[pawn].Count > 0)
-            {
-                return true;
-            }
-
             return false;
         }
 
         public void RemoveFavourite(Pawn pawn, string defName)
         {
-            if (PawnAbilityFavourites.ContainsKey(pawn) && PawnAbilityFavourites[pawn] != null)
+            if (PawnAbilityFavourites.TryGetValue(pawn, out List<string> favourites) && favourites != null)
             {
-                PawnAbilityFavourites[pawn].Remove(defName);
+                favourites.Remove(defName);
             }
         }
 
@@ -70,9 +106,9 @@ namespace RWRadial
 
         public bool IsFavourite(Pawn pawn, string defName)
         {
-            if (PawnAbilityFavourites.ContainsKey(pawn) && PawnAbilityFavourites[pawn] != null)
+            if (PawnAbilityFavourites.TryGetValue(pawn, out List<string> favourites) && favourites != null)
             {
-                return PawnAbilityFavourites[pawn].Contains(defName);
+                return favourites.Contains(defName);
             }
             return false;
         }

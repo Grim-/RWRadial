@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <KeyBindingCategoryDef>
+    <defName>RWR_Keys</defName>
+    <label>Radial Menus</label>
+    <description>Keybindings for the Radial UI mod.</description>
+    <isGameUniversal>true</isGameUniversal>
+  </KeyBindingCategoryDef>
+
+  <KeyBindingDef>
+    <defName>RWR_OpenArchitectMenu</defName>
+    <label>Open Architect Radial Menu</label>
+    <category>RWR_Keys</category>
+  </KeyBindingDef>
+
+  <KeyBindingDef>
+    <defName>RWR_OpenMenu</defName>
+    <label>Open/Close  Menu</label>
+    <category>RWR_Keys</category>
+  </KeyBindingDef>
+
+  <KeyBindingDef>
+    <defName>RWR_CloseMenu</defName>
+    <label>Close Menu</label>
+    <category>RWR_Keys</category>
+  </KeyBindingDef>
+
+  <KeyBindingDef>
+    <defName>RWR_NextMenu</defName>
+    <label>Next Menu</label>
+    <category>RWR_Keys</category>
+  </KeyBindingDef>
+
+  <KeyBindingDef>
+    <defName>RWR_PreviousMenu</defName>
+    <label>Previous Menu</label>
+    <category>RWR_Keys</category>
+  </KeyBindingDef>
+
+</Defs>
